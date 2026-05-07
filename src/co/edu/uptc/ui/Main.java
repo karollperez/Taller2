@@ -40,17 +40,30 @@ public class Main {
         	        "10. Eliminar medicamento\n" +
         	        "11. Salir";
 
-        	String optionInput = JOptionPane.showInputDialog(
+        	String optionInput = (String) JOptionPane.showInputDialog(
         	        null,
         	        menu,
         	        "MENÚ PRINCIPAL",
-        	        JOptionPane.QUESTION_MESSAGE
+        	        JOptionPane.QUESTION_MESSAGE,
+        	        null,
+        	        null,
+        	        ""
         	);
+
         	if (optionInput == null) {
-        	    option = 0;
+        	    optionInput = "";
+        	}
+        	
+        	if (optionInput.trim().isEmpty()) {
+
+        	    JOptionPane.showMessageDialog(
+        	            null,
+        	            "Debes ingresar una opción"
+        	    );
+
         	    continue;
         	}
-
+        	
         	while (!optionInput.matches("\\d+")) {
 
         	    JOptionPane.showMessageDialog(
@@ -576,6 +589,19 @@ public class Main {
                     
                 case 8:
 
+                    ArrayList<Patient> patientsDelete =
+                            patientService.getPatientsOrdered();
+
+                    if (patientsDelete.isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "No hay pacientes registrados"
+                        );
+
+                        break;
+                    }
+
                     String deletePatientInput =
                             JOptionPane.showInputDialog(
                                     null,
@@ -619,6 +645,19 @@ public class Main {
                     break;
                     
                 case 9:
+
+                    ArrayList<Doctor> doctorsDelete =
+                            doctorService.getDoctorsOrdered();
+
+                    if (doctorsDelete.isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "No hay doctores registrados"
+                        );
+
+                        break;
+                    }
 
                     String deleteDoctorInput =
                             JOptionPane.showInputDialog(
@@ -664,6 +703,19 @@ public class Main {
                     
                 case 10:
 
+                    ArrayList<Patient> patientsMedication =
+                            patientService.getPatientsOrdered();
+
+                    if (patientsMedication.isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "No hay pacientes registrados"
+                        );
+
+                        break;
+                    }
+
                     String medicationPatientInput =
                             JOptionPane.showInputDialog(
                                     null,
@@ -694,6 +746,16 @@ public class Main {
                         JOptionPane.showMessageDialog(
                                 null,
                                 "Paciente no encontrado"
+                        );
+
+                        break;
+                    }
+
+                    if (medicationPatient.getMedicationHistory().isEmpty()) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "El paciente no tiene medicamentos registrados"
                         );
 
                         break;
