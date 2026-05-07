@@ -42,6 +42,10 @@ public class Patient {
         medicationHistory.add(medication);
     }
 
+    public void removeMedication(String medication) {
+        medicationHistory.remove(medication);
+    }
+    
     public void addAppointment(MedicalAppointment appointment) {
         appointmentHistory.add(appointment);
     }

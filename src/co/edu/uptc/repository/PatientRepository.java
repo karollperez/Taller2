@@ -40,4 +40,17 @@ public class PatientRepository {
     public HashMap<Integer, Patient> getPatients() {
         return patients;
     }
+    
+    public boolean deletePatient(int id) {
+
+        Patient patient = patients.remove(id);
+
+        if (patient != null) {
+
+            emails.remove(patient.getEmail());
+            return true;
+        }
+
+        return false;
+    }
 }

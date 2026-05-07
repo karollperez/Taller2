@@ -23,6 +23,9 @@ public class PatientService {
     }
     
     
+    public boolean deletePatient(int id) {
+        return repository.deletePatient(id);
+    }
     
     
     public java.util.ArrayList<Patient> getPatientsOrdered() {

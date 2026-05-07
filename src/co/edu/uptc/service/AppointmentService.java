@@ -31,14 +31,22 @@ public class AppointmentService {
 
         return added;
     }
+
     public ArrayList<MedicalAppointment> getAppointmentsOrdered() {
 
         ArrayList<MedicalAppointment> appointments =
                 repository.getAppointments();
 
-        appointments.sort(Comparator
-                .comparing(MedicalAppointment::getTimeAppointment)
-                .thenComparing(a -> -a.getPriority().getLevel()));
+        appointments.sort(
+                Comparator
+                        .comparing(
+                                (MedicalAppointment a) ->
+                                        -a.getPriority().getLevel()
+                        )
+                        .thenComparing(
+                                MedicalAppointment::getTimeAppointment
+                        )
+        );
 
         return appointments;
     }

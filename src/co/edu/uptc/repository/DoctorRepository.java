@@ -33,4 +33,9 @@ public class DoctorRepository {
     public ArrayList<Doctor> getDoctors() {
         return new ArrayList<>(doctors.values());
     }
+    
+    public boolean deleteDoctor(int id) {
+
+        return doctors.remove(id) != null;
+    }
 }

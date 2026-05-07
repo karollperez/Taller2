@@ -22,27 +22,59 @@ public class Main {
         // MATRIZ DE TURNOS
         String[][] medicalAgenda = new String[5][8];
 
-        int option;
+        int option = 0;
 
         do {
 
-            String menu =
-                    "CLINICA EL LAGUITO\n\n" +
-                    "1. Registrar paciente\n" +
-                    "2. Registrar doctor\n" +
-                    "3. Registrar cita\n" +
-                    "4. Agregar medicamento\n" +
-                    "5. Ver citas ordenadas\n" +
-                    "6. Ver médicos ordenados\n" +
-                    "7. Ver pacientes registrados\n" +
-                    "8. Salir";
+        	String menu =
+        	        "CLINICA EL LAGUITO\n\n" +
+        	        "1. Registrar paciente\n" +
+        	        "2. Registrar doctor\n" +
+        	        "3. Registrar cita\n" +
+        	        "4. Agregar medicamento\n" +
+        	        "5. Ver citas ordenadas\n" +
+        	        "6. Ver médicos ordenados\n" +
+        	        "7. Ver pacientes registrados\n" +
+        	        "8. Eliminar paciente\n" +
+        	        "9. Eliminar doctor\n" +
+        	        "10. Eliminar medicamento\n" +
+        	        "11. Salir";
 
-            option = Integer.parseInt(
-                    JOptionPane.showInputDialog(null,
-                            menu,
-                            "MENÚ PRINCIPAL",
-                            JOptionPane.QUESTION_MESSAGE)
-            );
+        	String optionInput = JOptionPane.showInputDialog(
+        	        null,
+        	        menu,
+        	        "MENÚ PRINCIPAL",
+        	        JOptionPane.QUESTION_MESSAGE
+        	);
+        	if (optionInput == null) {
+        	    option = 0;
+        	    continue;
+        	}
+
+        	while (!optionInput.matches("\\d+")) {
+
+        	    JOptionPane.showMessageDialog(
+        	            null,
+        	            "Solo se permiten numeros"
+        	    );
+
+        	    optionInput = JOptionPane.showInputDialog(
+        	            null,
+        	            menu,
+        	            "MENÚ PRINCIPAL",
+        	            JOptionPane.QUESTION_MESSAGE
+        	    );
+
+        	    if (optionInput == null) {
+        	        break;
+        	    }
+        	}
+
+        	if (optionInput == null) {
+        	    continue;
+        	}
+
+        	option = Integer.parseInt(optionInput);
 
             switch (option) {
 
@@ -59,17 +91,61 @@ public class Main {
                                     IdentificationType.CC
                             );
 
-                    int idPatient = Integer.parseInt(
-                            JOptionPane.showInputDialog(
-                                    null,
-                                    "Número identificación:"
-                            )
-                    );
+                    String idInput;
 
-                    String firstName = JOptionPane.showInputDialog(
-                            null,
-                            "Nombre:"
-                    );
+                    do {
+
+                        idInput = JOptionPane.showInputDialog(
+                                null,
+                                "Número identificación:"
+                        );
+
+                        if (idInput == null) {
+                            break;
+                        }
+
+                        if (!idInput.matches("\\d+")) {
+
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Solo se permiten numeros"
+                            );
+                        }
+
+                    } while (!idInput.matches("\\d+"));
+
+                    if (idInput == null) {
+                        break;
+                    }
+
+                    int idPatient = Integer.parseInt(idInput);
+
+                    String firstName;
+
+                    do {
+
+                        firstName = JOptionPane.showInputDialog(
+                                null,
+                                "Nombre:"
+                        );
+
+                        if (firstName == null) {
+                            break;
+                        }
+
+                        if (!firstName.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Solo puedes ingresar caracteres"
+                            );
+                        }
+
+                    } while (!firstName.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+"));
+
+                    if (firstName == null) {
+                        break;
+                    }
 
                     String lastName = JOptionPane.showInputDialog(
                             null,
@@ -322,17 +398,35 @@ public class Main {
 
                 case 5:
 
-                    ArrayList<MedicalAppointment> appointments =
-                            appointmentService
-                                    .getAppointmentsOrdered();
+                	ArrayList<MedicalAppointment> appointments =
+                    appointmentService
+                            .getAppointmentsOrdered();
 
-                    String infoAppointments = "";
+            if (appointments.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No hay citas registradas"
+                );
+
+                break;
+            }
+
+            String infoAppointments = "";
+
+                    int turno = 1;
 
                     for (MedicalAppointment m : appointments) {
 
                         infoAppointments +=
-                                m +
-                                "\n";
+                                "Turno #" + turno +
+                                "\nPaciente: " + m.getPatient().getFullName() +
+                                "\nDoctor: " + m.getDoctor().getFullName() +
+                                "\nHora: " + m.getTimeAppointment() +
+                                "\nPrioridad: " + m.getPriority() +
+                                "\n----------------------\n";
+
+                        turno++;
                     }
 
                     JOptionPane.showMessageDialog(
@@ -344,10 +438,20 @@ public class Main {
 
                 case 6:
 
-                    ArrayList<Doctor> doctors =
-                            doctorService.getDoctorsOrdered();
+                	ArrayList<Doctor> doctors =
+                    doctorService.getDoctorsOrdered();
 
-                    String infoDoctors = "";
+            if (doctors.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No hay doctores registrados"
+                );
+
+                break;
+            }
+
+            String infoDoctors = "";
 
                     for (Doctor d : doctors) {
 
@@ -365,10 +469,20 @@ public class Main {
 
                 case 7:
 
-                    ArrayList<Patient> patients =
-                            patientService.getPatientsOrdered();
+                	ArrayList<Patient> patients =
+                    patientService.getPatientsOrdered();
 
-                    String infoPatients = "";
+            if (patients.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No hay pacientes registrados"
+                );
+
+                break;
+            }
+
+            String infoPatients = "";
 
                     for (Patient patientInfo : patients) {
 
@@ -383,9 +497,155 @@ public class Main {
                     );
 
                     break;
+                    
+                case 8:
+
+                    String deletePatientInput =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID paciente a eliminar:"
+                            );
+
+                    if (deletePatientInput == null) {
+                        break;
+                    }
+
+                    if (!deletePatientInput.matches("\\d+")) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Solo se permiten numeros"
+                        );
+
+                        break;
+                    }
+
+                    boolean deletedPatient =
+                            patientService.deletePatient(
+                                    Integer.parseInt(deletePatientInput)
+                            );
+
+                    if (deletedPatient) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente eliminado"
+                        );
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente no encontrado"
+                        );
+                    }
+
+                    break;
+                    
+                case 9:
+
+                    String deleteDoctorInput =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID doctor a eliminar:"
+                            );
+
+                    if (deleteDoctorInput == null) {
+                        break;
+                    }
+
+                    if (!deleteDoctorInput.matches("\\d+")) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Solo se permiten numeros"
+                        );
+
+                        break;
+                    }
+
+                    boolean deletedDoctor =
+                            doctorService.deleteDoctor(
+                                    Integer.parseInt(deleteDoctorInput)
+                            );
+
+                    if (deletedDoctor) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Doctor eliminado"
+                        );
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Doctor no encontrado"
+                        );
+                    }
+
+                    break;
+                    
+                case 10:
+
+                    String medicationPatientInput =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID paciente:"
+                            );
+
+                    if (medicationPatientInput == null) {
+                        break;
+                    }
+
+                    if (!medicationPatientInput.matches("\\d+")) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Solo se permiten numeros"
+                        );
+
+                        break;
+                    }
+
+                    Patient medicationPatient =
+                            patientService.findPatient(
+                                    Integer.parseInt(medicationPatientInput)
+                            );
+
+                    if (medicationPatient == null) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente no encontrado"
+                        );
+
+                        break;
+                    }
+
+                    String medicationDelete =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Medicamento a eliminar:"
+                            );
+
+                    if (medicationDelete == null) {
+                        break;
+                    }
+
+                    medicationPatient.removeMedication(
+                            medicationDelete
+                    );
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Medicamento eliminado"
+                    );
+
+                    break;
             }
 
-        } while (option != 8);
+        } while (option != 11);
 
         JOptionPane.showMessageDialog(
                 null,

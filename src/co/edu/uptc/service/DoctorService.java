@@ -24,6 +24,10 @@ public class DoctorService {
     public Doctor findDoctor(int id) {
         return repository.findDoctor(id);
     }
+    
+    public boolean deleteDoctor(int id) {
+        return repository.deleteDoctor(id);
+    }
 
     public ArrayList<Doctor> getDoctorsOrdered() {
 
