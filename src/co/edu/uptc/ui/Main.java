@@ -26,174 +26,200 @@ public class Main {
 
         do {
 
-            option = Integer.parseInt(JOptionPane.showInputDialog(
+            String menu =
                     "CLINICA EL LAGUITO\n\n" +
-                            "1. Registrar paciente\n" +
-                            "2. Registrar doctor\n" +
-                            "3. Registrar cita\n" +
-                            "4. Agregar medicamento\n" +
-                            "5. Ver citas ordenadas\n" +
-                            "6. Ver médicos ordenados\n" +
-                            "7. Salir"
-            ));
+                    "1. Registrar paciente\n" +
+                    "2. Registrar doctor\n" +
+                    "3. Registrar cita\n" +
+                    "4. Agregar medicamento\n" +
+                    "5. Ver citas ordenadas\n" +
+                    "6. Ver médicos ordenados\n" +
+                    "7. Ver pacientes registrados\n" +
+                    "8. Salir";
+
+            option = Integer.parseInt(
+                    JOptionPane.showInputDialog(null,
+                            menu,
+                            "MENÚ PRINCIPAL",
+                            JOptionPane.QUESTION_MESSAGE)
+            );
 
             switch (option) {
 
-            case 1:
+                case 1:
 
-                String patientTypeInput =
-                        JOptionPane.showInputDialog(
-                                "Tipo identificación:\n" +
-                                "CC\nTI\nCE\nPA"
-                        );
+                    IdentificationType patientType =
+                            (IdentificationType) JOptionPane.showInputDialog(
+                                    null,
+                                    "Seleccione el tipo de identificación",
+                                    "TIPO IDENTIFICACIÓN",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    IdentificationType.values(),
+                                    IdentificationType.CC
+                            );
 
-                IdentificationType patientType =
-                        IdentificationType.valueOf(
-                                patientTypeInput.toUpperCase()
-                        );
-
-                int idPatient = Integer.parseInt(
-                        JOptionPane.showInputDialog(
-                                "Número identificación:"
-                        )
-                );
-
-                String firstName = JOptionPane.showInputDialog(
-                        "Nombre:"
-                );
-
-                String lastName = JOptionPane.showInputDialog(
-                        "Apellido:"
-                );
-
-                String email = JOptionPane.showInputDialog(
-                        "Email:"
-                );
-
-                String priorityInput =
-                        JOptionPane.showInputDialog(
-                                "Prioridad:\n" +
-                                "LOW\nMEDIUM\nHIGH\nCRITICAL"
-                        );
-
-                Priority patientPriority =
-                        Priority.valueOf(
-                                priorityInput.toUpperCase()
-                        );
-
-                Patient patient = new Patient(
-                        patientType,
-                        idPatient,
-                        firstName,
-                        lastName,
-                        email,
-                        patientPriority
-                );
-
-                boolean addedPatient =
-                        patientService.registerPatient(patient);
-
-                if (addedPatient) {
-
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Paciente registrado"
+                    int idPatient = Integer.parseInt(
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Número identificación:"
+                            )
                     );
 
-                } else {
-
-                    JOptionPane.showMessageDialog(
+                    String firstName = JOptionPane.showInputDialog(
                             null,
-                            "Paciente duplicado"
-                    );
-                }
-
-                break;
-                
-            case 2:
-
-                String doctorTypeInput =
-                        JOptionPane.showInputDialog(
-                                "Tipo identificación:\n" +
-                                "CC\nTI\nCE\nPA"
-                        );
-
-                IdentificationType doctorType =
-                        IdentificationType.valueOf(
-                                doctorTypeInput.toUpperCase()
-                        );
-
-                int doctorId = Integer.parseInt(
-                        JOptionPane.showInputDialog(
-                                "Número identificación:"
-                        )
-                );
-
-                String doctorName = JOptionPane.showInputDialog(
-                        "Nombre:"
-                );
-
-                String doctorLastName =
-                        JOptionPane.showInputDialog(
-                                "Apellido:"
-                        );
-
-                String specialty =
-                        JOptionPane.showInputDialog(
-                                "Especialidad:"
-                        );
-
-                int experience = Integer.parseInt(
-                        JOptionPane.showInputDialog(
-                                "Años experiencia:"
-                        )
-                );
-
-                Doctor doctor = new Doctor(
-                        doctorType,
-                        doctorId,
-                        doctorName,
-                        doctorLastName,
-                        specialty,
-                        experience
-                );
-
-                boolean addedDoctor =
-                        doctorService.registerDoctor(doctor);
-
-                if (addedDoctor) {
-
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Doctor registrado"
+                            "Nombre:"
                     );
 
-                } else {
-
-                    JOptionPane.showMessageDialog(
+                    String lastName = JOptionPane.showInputDialog(
                             null,
-                            "Doctor duplicado"
+                            "Apellido:"
                     );
-                }
 
-                break;
-                
+                    String email = JOptionPane.showInputDialog(
+                            null,
+                            "Email:"
+                    );
+
+                    Priority patientPriority =
+                            (Priority) JOptionPane.showInputDialog(
+                                    null,
+                                    "Seleccione la prioridad",
+                                    "PRIORIDAD",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    Priority.values(),
+                                    Priority.LOW
+                            );
+
+                    Patient patient = new Patient(
+                            patientType,
+                            idPatient,
+                            firstName,
+                            lastName,
+                            email,
+                            patientPriority
+                    );
+
+                    boolean addedPatient =
+                            patientService.registerPatient(patient);
+
+                    if (addedPatient) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente registrado"
+                        );
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente duplicado"
+                        );
+                    }
+
+                    break;
+
+                case 2:
+
+                    IdentificationType doctorType =
+                            (IdentificationType) JOptionPane.showInputDialog(
+                                    null,
+                                    "Seleccione el tipo de identificación",
+                                    "TIPO IDENTIFICACIÓN",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    IdentificationType.values(),
+                                    IdentificationType.CC
+                            );
+
+                    int doctorId = Integer.parseInt(
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Número identificación:"
+                            )
+                    );
+
+                    String doctorName = JOptionPane.showInputDialog(
+                            null,
+                            "Nombre:"
+                    );
+
+                    String doctorLastName =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Apellido:"
+                            );
+
+                    String specialty =
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Especialidad:"
+                            );
+
+                    int experience = Integer.parseInt(
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "Años experiencia:"
+                            )
+                    );
+
+                    Doctor doctor = new Doctor(
+                            doctorType,
+                            doctorId,
+                            doctorName,
+                            doctorLastName,
+                            specialty,
+                            experience
+                    );
+
+                    boolean addedDoctor =
+                            doctorService.registerDoctor(doctor);
+
+                    if (addedDoctor) {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Doctor registrado"
+                        );
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Doctor duplicado"
+                        );
+                    }
+
+                    break;
+
                 case 3:
 
                     int appointmentId = Integer.parseInt(
-                            JOptionPane.showInputDialog("ID cita:")
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID cita:"
+                            )
                     );
 
                     String hour = JOptionPane.showInputDialog(
+                            null,
                             "Hora cita:"
                     );
 
                     int patientId = Integer.parseInt(
-                            JOptionPane.showInputDialog("ID paciente:")
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID paciente:"
+                            )
                     );
 
                     int docId = Integer.parseInt(
-                            JOptionPane.showInputDialog("ID doctor:")
+                            JOptionPane.showInputDialog(
+                                    null,
+                                    "ID doctor:"
+                            )
                     );
 
                     Patient existingPatient =
@@ -205,16 +231,24 @@ public class Main {
                     if (existingPatient == null ||
                             existingDoctor == null) {
 
-                        JOptionPane.showMessageDialog(null,
-                                "Paciente o doctor no existe");
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente o doctor no existe"
+                        );
 
                         break;
                     }
 
-                    Priority priority = Priority.valueOf(
-                            JOptionPane.showInputDialog(
-                                    "LOW, MEDIUM, HIGH, CRITICAL")
-                    );
+                    Priority priority =
+                            (Priority) JOptionPane.showInputDialog(
+                                    null,
+                                    "Seleccione la prioridad",
+                                    "PRIORIDAD",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    Priority.values(),
+                                    Priority.LOW
+                            );
 
                     MedicalAppointment appointment =
                             new MedicalAppointment(
@@ -230,11 +264,18 @@ public class Main {
                                     .registerAppointment(appointment);
 
                     if (addedAppointment) {
-                        JOptionPane.showMessageDialog(null,
-                                "Cita registrada");
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Cita registrada"
+                        );
+
                     } else {
-                        JOptionPane.showMessageDialog(null,
-                                "Cita duplicada");
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Cita duplicada"
+                        );
                     }
 
                     break;
@@ -244,27 +285,37 @@ public class Main {
                     int patientMedicationId =
                             Integer.parseInt(
                                     JOptionPane.showInputDialog(
-                                            "ID paciente:")
+                                            null,
+                                            "ID paciente:"
+                                    )
                             );
 
                     Patient p =
                             patientService.findPatient(
-                                    patientMedicationId);
+                                    patientMedicationId
+                            );
 
                     if (p != null) {
 
                         String med =
                                 JOptionPane.showInputDialog(
+                                        null,
                                         "Medicamento:"
                                 );
 
                         p.addMedication(med);
 
-                        JOptionPane.showMessageDialog(null,
-                                "Medicamento agregado");
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Medicamento agregado"
+                        );
+
                     } else {
-                        JOptionPane.showMessageDialog(null,
-                                "Paciente no encontrado");
+
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Paciente no encontrado"
+                        );
                     }
 
                     break;
@@ -278,11 +329,16 @@ public class Main {
                     String infoAppointments = "";
 
                     for (MedicalAppointment m : appointments) {
-                        infoAppointments += m + "\n";
+
+                        infoAppointments +=
+                                m +
+                                "\n";
                     }
 
-                    JOptionPane.showMessageDialog(null,
-                            infoAppointments);
+                    JOptionPane.showMessageDialog(
+                            null,
+                            infoAppointments
+                    );
 
                     break;
 
@@ -294,18 +350,47 @@ public class Main {
                     String infoDoctors = "";
 
                     for (Doctor d : doctors) {
-                        infoDoctors += d + "\n";
+
+                        infoDoctors +=
+                                d +
+                                "\n";
                     }
 
-                    JOptionPane.showMessageDialog(null,
-                            infoDoctors);
+                    JOptionPane.showMessageDialog(
+                            null,
+                            infoDoctors
+                    );
+
+                    break;
+
+                case 7:
+
+                    ArrayList<Patient> patients =
+                            patientService.getPatientsOrdered();
+
+                    String infoPatients = "";
+
+                    for (Patient patientInfo : patients) {
+
+                        infoPatients +=
+                                patientInfo +
+                                "\n------------------------\n";
+                    }
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            infoPatients
+                    );
 
                     break;
             }
 
-        } while (option != 7);
+        } while (option != 8);
 
-        JOptionPane.showMessageDialog(null,
-                "Sistema finalizado");
+        JOptionPane.showMessageDialog(
+                null,
+                "Sistema finalizado"
+        );
     }
 }
+

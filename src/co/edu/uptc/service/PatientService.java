@@ -21,4 +21,23 @@ public class PatientService {
     public Patient findPatient(int id) {
         return repository.findPatient(id);
     }
+    
+    
+    
+    
+    public java.util.ArrayList<Patient> getPatientsOrdered() {
+
+        java.util.ArrayList<Patient> patients =
+                new java.util.ArrayList<>(
+                        repository.getPatients().values()
+                );
+
+        patients.sort(
+                java.util.Comparator.comparing(
+                        (Patient p) -> -p.getPriority().getLevel()
+                )
+        );
+
+        return patients;
+    }
 }

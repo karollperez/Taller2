@@ -77,14 +77,18 @@ public class Patient {
     @Override
     public String toString() {
 
-        return identificationType +
-                " - " +
+        return "Tipo documento: " +
+                identificationType +
+                "\nNumero documento: " +
                 idPatient +
-                " | " +
+                "\nNombre completo: " +
                 getFullName() +
-                " | Email: " +
+                "\nEmail: " +
                 email +
-                " | Prioridad: " +
-                priority;
+                "\nPrioridad: " +
+                priority +
+                "\nHistorial medicamentos: " +
+                medicationHistory +
+                "\n";
     }
 }
