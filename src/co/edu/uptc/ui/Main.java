@@ -8,10 +8,33 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 /**
- * Clase principal del sistema
+ * Clase principal del sistema de la clínica.
+ * Permite gestionar pacientes, médicos, citas médicas
+ * y medicamentos mediante un menú interactivo.
+ *
+ * @author Karoll Daniela Pérez Ortiz
+ * @version 1.0
+ * @since JDK 21
  */
 public class Main {
 
+    /**
+     * Método principal del sistema.
+     * Ejecuta el menú principal y controla las opciones
+     * disponibles para el registro y gestión de información.
+     *
+     * Funcionalidades disponibles:
+     * <ul>
+     * <li>Registrar pacientes</li>
+     * <li>Registrar médicos</li>
+     * <li>Registrar citas médicas</li>
+     * <li>Agregar y eliminar medicamentos</li>
+     * <li>Visualizar información ordenada</li>
+     * <li>Eliminar pacientes y médicos</li>
+     * </ul>
+     *
+     * @param args argumentos de ejecución del programa
+     */
     public static void main(String[] args) {
 
         PatientService patientService = new PatientService();
@@ -19,8 +42,6 @@ public class Main {
         AppointmentService appointmentService =
                 new AppointmentService();
 
-        // MATRIZ DE TURNOS
-        String[][] medicalAgenda = new String[5][8];
 
         int option = 0;
 
@@ -90,7 +111,9 @@ public class Main {
         	option = Integer.parseInt(optionInput);
 
             switch (option) {
-
+            
+            
+         // Registro de pacientes
             case 1:
 
                 IdentificationType patientType =
@@ -226,6 +249,7 @@ public class Main {
 
                 break;
 
+            // Registro de doctores
             case 2:
 
                 IdentificationType doctorType =
@@ -324,6 +348,7 @@ public class Main {
 
                 break;
 
+             // Registro de citas médicas
             case 3:
 
                 String appointmentInput =
@@ -436,6 +461,8 @@ public class Main {
 
                 break;
 
+                
+            // Agregar medicamento a un paciente
             case 4:
 
                 String patientMedicationInput =
@@ -484,7 +511,8 @@ public class Main {
                 }
 
                 break;
-
+                
+             // Mostrar citas ordenadas por prioridad
                 case 5:
 
                 	ArrayList<MedicalAppointment> appointments =
@@ -525,6 +553,7 @@ public class Main {
 
                     break;
 
+               // Mostrar médicos ordenados
                 case 6:
 
                 	ArrayList<Doctor> doctors =
@@ -556,6 +585,7 @@ public class Main {
 
                     break;
 
+               // Mostrar pacientes registrados
                 case 7:
 
                 	ArrayList<Patient> patients =
@@ -587,6 +617,7 @@ public class Main {
 
                     break;
                     
+               // Eliminar paciente
                 case 8:
 
                     ArrayList<Patient> patientsDelete =
@@ -644,6 +675,8 @@ public class Main {
 
                     break;
                     
+                 
+               // Eliminar doctor
                 case 9:
 
                     ArrayList<Doctor> doctorsDelete =
@@ -701,6 +734,7 @@ public class Main {
 
                     break;
                     
+               // Eliminar medicamento del historial      
                 case 10:
 
                     ArrayList<Patient> patientsMedication =
@@ -783,6 +817,8 @@ public class Main {
                     break;
             }
 
+            
+       //salir del programa
         } while (option != 11);
 
         JOptionPane.showMessageDialog(
